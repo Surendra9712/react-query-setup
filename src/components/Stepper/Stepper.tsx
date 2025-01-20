@@ -1,7 +1,5 @@
 import React from 'react';
-import Step from './Step.tsx';
-import {StepperProps} from './StepperTypes';
-import StepperContext from './StepperContext';
+import {Step, StepperContext, StepperProps} from './index.ts';
 
 const Stepper: React.FC<StepperProps> = ({
                                              steps,
@@ -12,7 +10,7 @@ const Stepper: React.FC<StepperProps> = ({
     const stepsToRender = steps.map((step, index) => {
         return (
             <div className='flex-1 relative px-2' key={index}>
-                <Step index={index} {...(typeof step === 'object' ? step : {})} />
+                <Step index={index} label={step}/>
             </div>
         );
     });

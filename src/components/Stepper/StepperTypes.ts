@@ -1,7 +1,5 @@
-import {StepDTO} from '../Step/StepTypes';
-
-export interface StepperProps extends React.HTMLProps<HTMLDivElement> {
-    steps: StepDTO[];
+export interface StepperProps{
+    steps: string[];
     activeStep?: number;
     stepClicked?: (step: number) => void;
 }

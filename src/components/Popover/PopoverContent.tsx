@@ -6,12 +6,12 @@ interface PopoverContentProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
 }
 
-const PopoverContent = forwardRef<{ closePopover:()=>void },PopoverContentProps>(({children,...props},ref) => {
+const PopoverContent = forwardRef<{ closePopover: () => void }, PopoverContentProps>(({children, ...props}, ref) => {
     const {isOpen, position, closePopover, triggerRef} = usePopover();
 
     const contentRef = useRef<HTMLDivElement | null>(null);
 
-    React.useImperativeHandle(ref,() =>({
+    React.useImperativeHandle(ref, () => ({
         closePopover
     }))
     useEffect(() => {
@@ -43,6 +43,7 @@ const PopoverContent = forwardRef<{ closePopover:()=>void },PopoverContentProps>
     };
 
     let positionStyles: React.CSSProperties = {};
+    const addonMargin = 10;
     const handleHorizontalPosition = () => {
         if (availableSpace.left > availableSpace.right) {
             positionStyles = {...positionStyles, right: availableSpace.right};
@@ -53,31 +54,31 @@ const PopoverContent = forwardRef<{ closePopover:()=>void },PopoverContentProps>
 
     if (!position) {
         if (availableSpace.bottom > availableSpace.top) {
-            positionStyles = {...positionStyles, top: triggerRect.bottom, margin: '10px 0 0 0'};
+            positionStyles = {...positionStyles, top: triggerRect.bottom + addonMargin};
         } else {
-            positionStyles = {...positionStyles, bottom: window.innerHeight - triggerRect.top, margin: '0 0 10px 0'};
+            positionStyles = {...positionStyles, bottom: window.innerHeight - triggerRect.top + addonMargin};
         }
         handleHorizontalPosition();
     } else {
         if (position === 'top') {
-            positionStyles = {...positionStyles, bottom: window.innerHeight - triggerRect.top, margin: '0 0 10px 0'};
+            positionStyles = {...positionStyles, bottom: window.innerHeight - triggerRect.top + addonMargin};
             handleHorizontalPosition();
         } else if (position === 'bottom') {
-            positionStyles = {...positionStyles, top: triggerRect.bottom, margin: '10px 0 0 0'};
+            positionStyles = {...positionStyles, top: triggerRect.bottom + addonMargin};
             handleHorizontalPosition();
         } else if (position === 'left') {
             positionStyles = {
                 ...positionStyles,
                 top: triggerRect.top + triggerRect.height / 2,
                 transform: 'translateY(-50%)',
-                right: availableSpace.right + triggerRect.width + 10,
+                right: availableSpace.right + triggerRect.width + addonMargin,
             };
         } else if (position === 'right') {
             positionStyles = {
                 ...positionStyles,
                 top: triggerRect.top + triggerRect.height / 2,
                 transform: 'translateY(-50%)',
-                left: triggerRect.right + 10,
+                left: triggerRect.right + addonMargin,
             };
         }
     }
